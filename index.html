@@ -1759,7 +1759,9 @@
     window.createBulletin = createBulletin;
 
     function createDigitalClock(style, id=null, left, top) {
-        const div = createWrapper(`<div class="digital-clock clock-${style}">00:00:00</div>`, "", id, left, top);
+        // 修正：傳入 "clock-white" 或 "clock-black" 作為 className，確保 dataset.type 正確設定
+        const className = `clock-${style}`;
+        const div = createWrapper(`<div class="digital-clock ${className}">00:00:00</div>`, className, id, left, top);
         if(!div) return;
         const display = div.querySelector('.digital-clock');
         function tick() { if(!document.body.contains(display)) return; display.textContent = new Date().toLocaleTimeString('zh-TW', { hour12: false }); requestAnimationFrame(tick); }
@@ -1788,7 +1790,8 @@
             </div>
         `;
         
-        const div = createWrapper(html, "", id, left, top);
+        // 修正：傳入 "analog" 作為 className，確保 dataset.type 正確設定
+        const div = createWrapper(html, "analog", id, left, top);
         if(!div) return;
         const hourHand = div.querySelector('.hour-hand');
         const minHand = div.querySelector('.min-hand');
